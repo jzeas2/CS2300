@@ -1,0 +1,120 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Nov 19 16:12:14 2019
+
+@CS2300 Project 4
+@coauthor: Kevin Ojeda
+@coauthor: Jonathan Zeas
+"""
+
+import numpy as np
+
+#Linear Least Squares Fit
+
+#opening and reading the file by commas and spaces
+file1 = open("matrixa.txt","r")
+for line in file1:
+    #making an array of the values inside the file
+    array1 = line.split(", ")
+file1.close
+
+#opening and reading the file by commas and spaces
+file2 = open("matrixb.txt","r")
+for line in file2:
+    #making an array of the values inside the file
+    array2 = line.split(", ")
+file2.close
+
+#creating a 2d array
+array = [[1 for x in range(2)] for y in range(len(array1))]
+for i in range(0,len(array)):
+    temp = array1[i]
+    #filling in the 0 index of new array with array1 values
+    array[i][0] = int(temp)
+
+#creating a 2d array for the transpose
+matrix = [[1 for x in range(len(array1))] for y in range(2)]
+for i in range(0,len(array1)):
+    temp = array1[i]
+    #filling in the 2nd row of the transpose array
+    matrix[0][i] = int(temp)
+
+#defining variables to multiply matrices
+a = array
+b = matrix
+#casting strings to ints
+for item in range(0, len(array2)):
+    array2[item] = int(array2[item])
+c = array2
+#multiplying matrices
+matrix1 = np.matmul(b,a)
+matrix2 = np.matmul(b,c)
+#getting the inverse of matrix
+x = matrix1
+invrs = np.linalg.inv(x)
+#multiplying inverse with second matrix
+soltn = np.matmul(matrix2,invrs)
+#casting from strings to ints
+soltn1 = str(int(soltn[0]))
+soltn2 = str(int(soltn[1]))
+#printing y=mx+b with x1 and x0
+print("\nLinear Fit Formula:\n")
+if soltn[1] < 0:  
+    print("f(x)= " + soltn1 + "x " + soltn2)
+else:
+    print("f(x)= " + soltn1 + "x + " + soltn2)
+print(" ")
+#calculating career income at 15 years
+print("Career Income estimate after 15 years: $"+str(int(15*soltn[0]-soltn[1]))+'\n')
+
+
+
+#Does this make sense?
+
+print("This is a bit high after 10 years in the job market, but doesn't seem extremely high.\n")
+
+#Quadratic Least Squares Fit  
+#creating a 3d array with array values
+arrays = [[1 for x in range(3)] for y in range(len(array))]
+for i in range(0,len(arrays)):
+    temp = int(array[i][0])
+    #filling in the second index of new array with array values
+    arrays[i][1] = temp
+    #filling in the first index of new array with array squared values
+    arrays[i][0] = temp**2
+
+#creating 3d array for transpose
+matrixt = [[1 for x in range(len(arrays))] for y in range(3)]
+for i in range(0,len(arrays)):
+    temp = arrays[i][0]
+    #filling in the first row of transpose array
+    matrixt[0][i] = temp
+    #filling in the second row of transpose array
+    temp1 = arrays[i][1]
+    matrixt[1][i] = temp1
+
+#defining variables to multiply matrices
+q = arrays
+w = matrixt
+#multiplying matrices
+matrix3 = np.matmul(w,q)
+matrix4 = np.matmul(w,c)
+#getting inverse of matrix
+z = matrix3
+inverse = np.linalg.inv(z)
+#multiplying matrix with inverse
+solution = np.matmul(matrix4,inverse)
+#printing y=mx^2+bx+c with x2,x1,and x0
+solution1 = str(int(solution[0]))
+solution2 = str(int(solution[1]))
+solution3 = str(int(solution[2]))
+print("Quadratic Fit Formula:")
+print("f(x)= " + solution1 + "x^2 + " + solution2 + "x " + solution3)
+
+#career estimate
+print("\nCareer income estimate after 15 years: $"+str(int(int(solution1)*(15**2))+int(solution2)*15+int(solution3)))
+
+print("\nThis seems like a more likely income than the linear fit after 10 years in the job market, although it may be a bit low. Pushing this out to 30 years"+
+      " (25 years in the market) it goes down to $28369, which doesn't make sense.")
+
