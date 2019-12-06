@@ -3,7 +3,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Tue Oct  8 14:23:26 2019
-
+CS2300 Project 2 - This project is designed to read lines & target box values from a file, then p.ot them using matplotlib.pyplot
 @author: jonathanzeas
 """
 
