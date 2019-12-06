@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Tue Oct 29 15:21:43 2019
+This project is designed to solve a system of equations using Gaussian Elimination & matricies.
 @co-author: Jonathan Zeas
 @co-author: Kevin Ojeda
 
